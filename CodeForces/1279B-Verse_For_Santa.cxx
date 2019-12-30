@@ -55,7 +55,6 @@ int main()
             else
                 cout << i_max+1 << "\n";
         }
-
     }
     return 0;
 }
