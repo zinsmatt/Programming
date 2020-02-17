@@ -28,22 +28,42 @@ int main()
     cin >> tt;
     F(t, tt)
     {
-        ll n, d;
-        cin >> n >> d;
+        ll n, x;
+        cin >> n >> x;
         vector<ll> a(n);
-        F(i, n)
+        int ok = 0;
+        ll maxi = 0;
+        F(i, n){
             cin >> a[i];
-        int i = 1;
-        ll res = a[0];
-        while (d > 0 && i < n)
-        {
-            ll c = d / i;
-            ll real = min(a[i], c);
-            d -= real * i;
-            res += real;
-            ++i;
+            if (a[i] > maxi)
+                maxi = a[i];
+            if (a[i] == x)
+            {
+                ok = 1;
+            }
+            else if (a[i] > x && ok != 1)
+            {
+                ok = 2;
+            }
         }
-        cout << res << std::endl;
+
+        if (ok == 0)
+        {
+            double res = (double)x / maxi;
+            double res_ceil = std::ceil(res);
+            if (std::abs(res - res_ceil) < 1e-6)
+            {
+                cout << (ll)res << std::endl;
+            }
+            else
+            {
+                cout << (ll)res + 1ll << std::endl;
+            }
+        }
+        else
+        {
+            cout << ok << std::endl;
+        }
         
     }
 
