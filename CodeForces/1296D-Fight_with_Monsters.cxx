@@ -69,13 +69,33 @@ int dfs(const vector<vector<int>>& g, vector<int>& dist, int start, int end=-1)
 
 int main()
 {
-	ll tt;
-	cin >> tt;
-	F(t, tt)
-	{
-		
-	}
-    
+	ll n, a, b, k;
+	cin >> n >> a >> b >> k;
+	vector<ll> s(n);
+	int nb_other = 0;
 
+	F(i, n) {
+		ll x;
+		cin >> x;
+		x = x % (a+b);
+		if (x == 0)
+			x += a+b;
+		s[i] = (ll)ceil((float) x / a) - 1;
+	}
+	sort(s.begin(), s.end());
+	int res = 0;
+	int i = 0;
+	while (i < n && k > 0)
+	{
+		k -= s[i];
+		if (k >= 0)
+			++res;
+		else
+			break;
+		++i;
+	}
+
+
+	cout << res << std::endl;
     return 0;
 }
