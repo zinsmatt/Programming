@@ -49,7 +49,7 @@ int dfs(const vector<vector<int>>& g, vector<int>& dist, int start, int end=-1)
         q.pop();
         d.pop();
 
-        if (dist[x] == INF)
+        if (dist[x] == INF) 
         {
             dist[x] = dd;
             if (end == x)
@@ -73,7 +73,69 @@ int main()
 	cin >> tt;
 	F(t, tt)
 	{
-		
+		ll n, m;
+        cin >> n >> m;
+        vector<int> a(n);
+        vector<int> p(m);
+        vector<bool> pos(n, false);
+        F(i, n)
+        {
+            cin >> a[i];
+        }
+
+        F(i, m)
+        {
+            cin >> p[i];
+            pos[p[i]-1] = true;
+        }
+        //cout << "----------------\n";
+
+        vector<vector<int>> sets;
+        F(i, n)
+        {   
+            if (i == 0)
+            {
+                sets.push_back(vector<int>(1, a[i]));
+            }
+            else
+            {
+                if (pos[i-1])
+                {
+                    sets.back().push_back(a[i]);
+                }
+                else
+                {
+                    sets.push_back(vector<int>(1, a[i]));
+                }
+            }
+        }
+
+        /*for (auto& v : sets)
+        {
+            for (auto x : v)
+            {
+                cout << x << " ";
+            }
+            cout << "\n";
+        }*/
+        //cout << "----------------\n";
+        vector<int> mini, maxi;
+        for (auto& v : sets)
+        {
+            mini.push_back(*min_element(v.begin(), v.end()));
+            maxi.push_back(*max_element(v.begin(), v.end()));
+        }
+        bool ok = true;
+        for (int i = 1; i < sets.size(); ++i)
+        {
+            if (mini[i] < maxi[i-1])
+                ok = false;
+        }
+        if (ok)
+            cout << "YES\n";
+        else
+            cout << "NO\n";
+
 	}
     
 

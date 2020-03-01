@@ -24,16 +24,6 @@ using namespace std;
 #define LLINF std::numeric_limits<long long>::max()
 
 
-template <typename T, typename A>
-int arg_max(std::vector<T, A> const& vec) {
-  return static_cast<int>(std::distance(vec.begin(), max_element(vec.begin(), vec.end())));
-}
-
-template <typename T, typename A>
-int arg_min(std::vector<T, A> const& vec) {
-  return static_cast<int>(std::distance(vec.begin(), min_element(vec.begin(), vec.end())));
-}
-
 int dfs(const vector<vector<int>>& g, vector<int>& dist, int start, int end=-1)
 {
 	// g is a list of neighbours for each node
@@ -67,15 +57,65 @@ int dfs(const vector<vector<int>>& g, vector<int>& dist, int start, int end=-1)
         return -1;
 }
 
+struct hash_pair {
+	size_t operator()(const pair<int, int>& p) const
+	{
+		auto hash1 = hash<int>{}(p.first);
+		auto hash2 = hash<int>{}(p.second);
+		return hash1 ^hash2;
+	}
+};
+
 int main()
 {
-	ll tt;
-	cin >> tt;
-	F(t, tt)
-	{
-		
-	}
     
+    ll tt;
+    cin >> tt;
+    F(t, tt)
+    {
+    	ll n;
+    	cin >> n;
+    	string s;
+    	cin >> s;	
+    	unordered_map<pair<int, int>, int, hash_pair> map;
+    	map[make_pair(0, 0)] = 0;
+    	pair<int, int> x = {0, 0};
+    	int time = 0;
+    	int l, r, min_t = INF;
+    	for (auto& u : s)
+    	{
+    		if (u == 'L') {
+    			x.first--;
+    		} else if (u == 'R') {
+    			x.first++;
+    		} else if (u == 'U') {
+    			x.second++;
+    		} else {
+    			x.second--;
+    		}
+    		++time;
+    		if (map.find(x) != map.end())
+    		{
+    			if ((time - map[x] + 1) < min_t)
+    			{
+    				min_t = time - map[x] + 1;
+    				l = map[x];
+    				r = time-1;
+    			}
+    		}
+    		map[x] = time;
+    	}
+    	if (min_t < INF)
+    	{
+    		cout << l + 1 << " " << r + 1 << std::endl;
+    	}
+    	else
+    	{
+    		cout << "-1\n";
+    	}
+
+    }
+	
 
     return 0;
 }

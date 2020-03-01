@@ -21,18 +21,7 @@ using ull = unsigned long long;
 using namespace std;
  
 #define INF std::numeric_limits<int>::max()
-#define LLINF std::numeric_limits<long long>::max()
 
-
-template <typename T, typename A>
-int arg_max(std::vector<T, A> const& vec) {
-  return static_cast<int>(std::distance(vec.begin(), max_element(vec.begin(), vec.end())));
-}
-
-template <typename T, typename A>
-int arg_min(std::vector<T, A> const& vec) {
-  return static_cast<int>(std::distance(vec.begin(), min_element(vec.begin(), vec.end())));
-}
 
 int dfs(const vector<vector<int>>& g, vector<int>& dist, int start, int end=-1)
 {
@@ -67,15 +56,44 @@ int dfs(const vector<vector<int>>& g, vector<int>& dist, int start, int end=-1)
         return -1;
 }
 
+
 int main()
 {
+    
 	ll tt;
 	cin >> tt;
 	F(t, tt)
 	{
-		
+        ll n, k;
+        cin >> n >> k;
+        vector<ll> a(n);
+        ll imp = 0;
+        F(i, n) {
+            cin >> a[i];
+            if (a[i] % 2 == 1)
+                imp++;
+
+        }
+
+        if (imp >= k && (imp - k) % 2 == 0)
+        {
+            cout << "YES\n";
+            int r = 0;
+            for (int i = 0; i < n && r < k-1; ++i)
+            {
+                if (a[i] % 2 == 1)
+                {
+                    cout << i+1 << " ";
+                    ++r;
+                }
+            }
+            cout << n << "\n";
+        }
+        else
+        {
+            cout << "NO\n";
+        }
 	}
-    
 
     return 0;
 }

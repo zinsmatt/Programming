@@ -73,9 +73,37 @@ int main()
 	cin >> tt;
 	F(t, tt)
 	{
-		
-	}
-    
+		ll n, m;
+		cin >> n >> m;
+		string s;
+		cin >> s;
+		vector<int> stops(m);
+		F(i, m) {
+			cin >> stops[i];
+		}
 
+		vector<vector<int>> occ(n, vector<int>(26, 0));
+		F(i, n)
+		{
+			if (i > 0)
+			{
+				occ[i] = occ[i-1];
+			}
+			++occ[i][s[i]-'a'];
+		}
+		stops.push_back(n);
+
+		vector<int> res(26, 0);
+		F(i, stops.size())
+		{
+			auto& v = occ[stops[i]-1];
+			std::transform(res.begin(), res.end(), v.begin(), res.begin(), std::plus<int>());
+		}
+		for (auto r : res)
+			cout <<  r << " ";
+		cout << "\n";
+
+
+	}
     return 0;
 }

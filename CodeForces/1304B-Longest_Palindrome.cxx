@@ -21,18 +21,7 @@ using ull = unsigned long long;
 using namespace std;
  
 #define INF std::numeric_limits<int>::max()
-#define LLINF std::numeric_limits<long long>::max()
 
-
-template <typename T, typename A>
-int arg_max(std::vector<T, A> const& vec) {
-  return static_cast<int>(std::distance(vec.begin(), max_element(vec.begin(), vec.end())));
-}
-
-template <typename T, typename A>
-int arg_min(std::vector<T, A> const& vec) {
-  return static_cast<int>(std::distance(vec.begin(), min_element(vec.begin(), vec.end())));
-}
 
 int dfs(const vector<vector<int>>& g, vector<int>& dist, int start, int end=-1)
 {
@@ -67,15 +56,45 @@ int dfs(const vector<vector<int>>& g, vector<int>& dist, int start, int end=-1)
         return -1;
 }
 
+
 int main()
 {
-	ll tt;
-	cin >> tt;
-	F(t, tt)
-	{
-		
-	}
     
+	ll n, m;
+	cin >> n >> m;
+	std::vector<string> s(n);
+	vector<pair<int, int>> sym;
+	string uniform="";
+	unordered_map<string, int> map;
+	F(i, n)
+	{
+		cin >> s[i];
+		std::string rev = s[i];
+		std::reverse(rev.begin(), rev.end());
+		if (rev == s[i])
+		{
+			if (rev.size() > uniform.size())
+				uniform = rev;
+		}
+		else
+		{
+			if (map.find(rev) != map.end())
+			{
+				sym.emplace_back(map[rev], i);
+			}
+			else
+			{
+				map[s[i]] = i;
+			}
+		}
+	}
+	string res;
+	res = uniform;
+	for (auto& p : sym)
+	{
+		res = s[p.first] + res + s[p.second]; 
+	}
+	cout << res.size() << "\n" << res << "\n";
 
     return 0;
 }

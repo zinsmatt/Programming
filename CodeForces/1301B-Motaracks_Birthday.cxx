@@ -24,16 +24,6 @@ using namespace std;
 #define LLINF std::numeric_limits<long long>::max()
 
 
-template <typename T, typename A>
-int arg_max(std::vector<T, A> const& vec) {
-  return static_cast<int>(std::distance(vec.begin(), max_element(vec.begin(), vec.end())));
-}
-
-template <typename T, typename A>
-int arg_min(std::vector<T, A> const& vec) {
-  return static_cast<int>(std::distance(vec.begin(), min_element(vec.begin(), vec.end())));
-}
-
 int dfs(const vector<vector<int>>& g, vector<int>& dist, int start, int end=-1)
 {
 	// g is a list of neighbours for each node
@@ -67,15 +57,46 @@ int dfs(const vector<vector<int>>& g, vector<int>& dist, int start, int end=-1)
         return -1;
 }
 
+
 int main()
 {
-	ll tt;
-	cin >> tt;
-	F(t, tt)
-	{
-		
-	}
     
+    ll tt;
+    cin >> tt;
+    F(t, tt)
+    {
+    	ll n;
+    	cin >> n;
+    	vector<ll> a(n);
+    	ll maxi = -LLINF, mini = LLINF;
+    	ll max_diff = -LLINF;
+    	F(i, n)
+    	{
+    		cin >> a[i];
+    		if (i > 0)
+    		{
+    			if (a[i] == -1 && a[i-1] != -1)
+    			{
+    				maxi = max(maxi, a[i-1]);
+    				mini = min(mini, a[i-1]);    				
+    			}
+    			else if (a[i-1] == -1 && a[i] != -1)
+    			{
+    				maxi = max(maxi, a[i]);
+    				mini = min(mini, a[i]);    					
+    			}
+    			else
+    			{
+    				max_diff = max(max_diff, abs(a[i] - a[i-1]));
+    			}
+    		}
+    	}
+    	int k = (maxi + mini) / 2;
+    	int m = max(maxi - k, max_diff);
+    	cout << m << " " << k << "\n";
+
+    }
+	
 
     return 0;
 }

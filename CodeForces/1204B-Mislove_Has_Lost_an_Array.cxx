@@ -21,18 +21,7 @@ using ull = unsigned long long;
 using namespace std;
  
 #define INF std::numeric_limits<int>::max()
-#define LLINF std::numeric_limits<long long>::max()
 
-
-template <typename T, typename A>
-int arg_max(std::vector<T, A> const& vec) {
-  return static_cast<int>(std::distance(vec.begin(), max_element(vec.begin(), vec.end())));
-}
-
-template <typename T, typename A>
-int arg_min(std::vector<T, A> const& vec) {
-  return static_cast<int>(std::distance(vec.begin(), min_element(vec.begin(), vec.end())));
-}
 
 int dfs(const vector<vector<int>>& g, vector<int>& dist, int start, int end=-1)
 {
@@ -67,15 +56,25 @@ int dfs(const vector<vector<int>>& g, vector<int>& dist, int start, int end=-1)
         return -1;
 }
 
+
 int main()
 {
-	ll tt;
-	cin >> tt;
-	F(t, tt)
-	{
-		
-	}
-    
+    ll n, l, r;
+    cin >> n >> l >> r;
 
+    int mini = 0;
+    for (int i = 0; i < l; ++i)
+    {
+        mini += pow(2, i);
+    }
+    mini += (n-l);
+
+    ll maxi = 0;
+    for (int i = 0; i < r; ++i)
+    {
+        maxi += pow(2, i);
+    }
+    maxi += (n-r) * pow(2, r-1);
+    cout << mini << " " << maxi << "\n";
     return 0;
 }
