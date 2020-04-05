@@ -1,13 +1,15 @@
 class Solution {
 public:
     void moveZeroes(vector<int>& nums) {
-        for (int i = 0; i < nums.size()-1; ++i)
+        int next = 0;
+        for (auto x: nums)
         {
-            for (int j = 0; j < nums.size()-1 - i; ++j)
+            if (x != 0)
             {
-                if (nums[j] == 0)
-                    std::swap(nums[j], nums[j+1]);
+                nums[next++] = x;
             }
         }
+        while (next < nums.size())
+            nums[next++] = 0;
     }
 };
